@@ -1,0 +1,77 @@
+{% extends "home/layout.html" %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{{url_for('static', filename='search.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='follow.css')}}">
+{% endblock %}
+
+{% block head_script %}
+    <script src="{{url_for('static',filename='follow.js')}}"></script>
+{% endblock %}
+
+{% block title %}
+Search
+{% endblock %}
+
+{% block main_header %}
+    <div class="main-header-mid">
+        <div class="title">
+            <i class="fas fa-search fa-fw"></i>SEARCH
+        </div>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+    <form method="post" action="/search" class="search_container">
+        <div class="search_icon">
+            <div>@</div>
+        </div>
+        <input class="search_box" name="username" type="text" placeholder="ユーザー検索" autocomplete="off">
+        <button class="search_btn"><i class="fas fa-search"></i></button>
+    </form>
+    
+    <!--検索結果があった場合-->
+    {% if "id" in searched_user %}
+        <div class="follow-container">
+            <a href="{{url_for('todo', id=searched_user['id'])}}" class="follow-card">
+                <div>
+                    <img class="follow-icon" src="{{url_for('static',filename=searched_user['icon'])}}" alt="ユーザーアイコン">
+                </div>
+                <div class="follow-name-container">
+                    <div class="follow-account-name">
+                        {{ searched_user['account_name'] }}
+                    </div>
+                    <div class="follow-user-name">
+                        @{{ searched_user['name'] }}
+                    </div>
+                </div>
+                <div class="follow-task-container">
+                    <div class="follow-todo">
+                        <i class="fas fa-list-ul fa-fw"></i>todo {{ searched_user["todo_count"] }}
+                    </div>
+                    <div class="follow-done">
+                        <i class="fas fa-crown fa-fw"></i>done {{ searched_user["done_count"] }}
+                    </div>
+                </div>
+                <!-- フォローボタン -->
+                {% if session['user_id'] == searched_user["id"] %}
+                <!--ボタンを表示させない-->
+                {% elif searched_user['is_login_user_following'] %}
+                    <div class="follow-btn-container">
+                        <button type="submit" id="{{searched_user['id']}}" class="btn btn-outline-success js-follow-btn" onclick="return false">Following</button>
+                    </div>
+                {% else %}
+                    <div class="follow-btn-container">
+                        <button type="submit" id="{{searched_user['id']}}" class="btn btn-success js-follow-btn" onclick="return false">Follow</button>
+                    </div>
+                {% endif %}
+            </a>
+        </div>
+    <!--検索結果が見つからなかった場合-->
+    {% else %}
+        <div class="follow-container">
+            <p class="search-error">{{ error }}</p>
+        </div>
+    {% endif %}
+    
+{% endblock %}

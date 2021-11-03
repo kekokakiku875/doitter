@@ -1,0 +1,72 @@
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
+
+main .form-control
+{
+    /* Center form controls */
+    display: inline-block;
+
+    /* Override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main
+{
+    margin-top:40px;
+    /* Scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* Center contents */
+    text-align: center;
+    
+    
+}
+
+main img
+{
+    /* Constrain images on small screens */
+    max-width: 100%;
+}
+.btn{
+    color:#0CA789;
+    border-color:#0CA789;
+    /*background-color:#fff;*/
+}
+.btn:hover{
+    background-color:#0CA789;
+    color:white;
+}
+.btn:not(:disabled):not(.disabled).active, .btn-success:not(:disabled):not(.disabled):active, .show>.btn-success.dropdown-toggle {
+    background-color: #0a9177;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #e1f7e4;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(189 255 204 / 85%);
+}
+body{
+    background-color:#2b2b2b;
+    color:white;
+}
+.doitter{
+    font-size:50px;
+}
+.nav-item{
+    font-size:20px;
+}
+.nav-item:hover{
+    text-align: center;
+    background-color: #383838;
+    border-radius: 10px;
+    transform: scale(1.2, 1.2);
+}
+
+.btn:focus{
+    box-shadow: 0 0 0 0.2rem rgb(189 255 204 / 85%);
+}
+

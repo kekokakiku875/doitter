@@ -1,0 +1,71 @@
+{% extends "home/layout.html" %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{{url_for('static',filename='follow.css')}}">
+{% endblock %}
+
+{% block head_script %}
+    <script src="{{url_for('static',filename='follow.js')}}"></script>
+{% endblock %}
+
+{% block title %}
+Followers
+{% endblock %}
+
+{% block main_header %}
+    <div class="main-header-mid">
+        <div class="arrow-area">
+            <a type="button" onclick="history.back()"><i class="fas fa-arrow-left fa-fw"></i></a>
+        </div>
+        <div class="title">
+            FOLLOWERS
+        </div>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+    {% if followers %}
+        {% for follower in followers %}
+            <div class="follow-container">
+                <a href="{{url_for('todo', id=follower['id'])}}" class="follow-card">
+                    <div>
+                        <img class="follow-icon" src="{{url_for('static',filename=follower['user_icon'])}}" alt="ユーザーアイコン">
+                    </div>
+                    <div class="follow-name-container">
+                        <div class="follow-account-name">
+                            {{ follower['account_name'] }}
+                        </div>
+                        <div class="follow-user-name">
+                            @{{ follower['name'] }}
+                        </div>
+                    </div>
+                    <div class="follow-task-container">
+                        <div class="follow-todo">
+                            <i class="fas fa-list-ul fa-fw"></i>todo {{ follower["todo_count"] }}
+                        </div>
+                        <div class="follow-done">
+                            <i class="fas fa-crown fa-fw"></i>done {{ follower["done_count"] }}
+                        </div>
+                    </div>
+                    
+                    {% if session['user_id'] == follower['id'] %}
+                    
+                    {% elif follower["is_login_user_following"] %}
+                        <div class="follow-btn-container">
+                            <button type="submit" id="{{follower['id']}}" class="btn btn-outline-success js-follow-btn" onclick="return false">Following</button>
+                        </div>
+                    {% else %}
+                        <div class="follow-btn-container">
+                            <button type="submit" id="{{follower['id']}}" class="btn btn-success js-follow-btn" onclick="return false">Follow</button>
+                        </div>
+                    {% endif %}
+                </a>
+            </div>
+        {% endfor %}
+    <!--1人もフォローしていない場合-->
+    {% else %}
+        <div class="follow-container">
+            <p class="follow-none">現在フォロワーはいません</p>
+        </div>
+    {% endif %}
+{% endblock %}

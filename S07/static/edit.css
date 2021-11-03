@@ -1,0 +1,66 @@
+.content
+{
+    text-align: center;
+}
+.btn{
+    color:#0CA789;
+    border-color:#0CA789;
+    /*background-color:#fff;*/
+}
+.btn:hover
+{
+    background-color:#0CA789;
+    color:white;
+}
+.profile-icon
+{
+    width: 10rem;
+    height: 10rem;
+    margin: 0 1rem 0 0;
+    border-radius: 50%;
+    /*border: 2px solid black;*/
+    box-sizing: border-box;
+}
+.upload-label:hover
+{
+    cursor:pointer;
+}
+.preview .profile-icon:hover
+{
+    filter: brightness(120%);
+}
+.upload-label input
+{
+  display: none;
+}
+.account-name
+{
+    display: flex;
+    justify-content:center;
+}
+.cancel:hover
+{
+     background-color: #383838;
+     border-radius: 5px;
+}
+p
+{
+    font-size:2rem;
+}
+.user-name
+{
+    display: flex;
+    justify-content:center;
+    width:70%;
+    margin-left:100px;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #e1f7e4;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(189 255 204 / 85%);
+}
+.btn:focus{
+   box-shadow: 0 0 0 0.2rem rgb(189 255 204 / 85%);
+}

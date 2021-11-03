@@ -1,0 +1,125 @@
+.icon {
+    /*width: 30px;*/
+    width: 3rem;
+    height: 3rem;
+    /*margin-right: 1rem;*/
+    border-radius: 50%;
+    /*border: 2px solid black;*/
+    box-sizing: border-box;
+}
+
+.block {
+    display: flex;
+}
+
+.comment {
+    margin-top:15px;
+    margin-right:15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-control {
+    border-color: black;
+}
+
+.add-comment {
+    /*background-color: #DEF1EA;*/
+    background-color:#2b2b2b;
+    margin-right:15px;
+    margin-left: 0px;
+}
+
+.content {
+    margin-bottom:15px;
+    display: flex;
+}
+
+.post {
+    margin-bottom:15px;
+    margin-right:15px;
+}
+
+.card {
+    margin-left: 15px;
+    padding:15px;
+    background-color:#333333;
+    color:white;
+    border:1px solid #c9c9c9;
+}
+
+.card-name {
+    margin-right: 10px
+}
+
+.card-content {
+    margin-bottom: 3px;
+}
+
+.righten {
+     margin-left: auto;
+}
+
+
+
+.btn{
+    color:#0CA789;
+    border-color:#0CA789;
+    /*background-color:#fff;*/
+}
+
+.btn:hover{
+    background-color:#0CA789;
+}
+
+
+.hidden{
+    visibility:hidden;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #e1f7e4;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(189 255 204 / 85%);
+}
+
+.icon-card {
+    /*width: 30px;*/
+    width: 3rem;
+    height: 3rem;
+    /*margin-right: 1rem;*/
+    border-radius: 50%;
+    /*border: 2px solid black;*/
+    box-sizing: border-box;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+.good{
+    border-color: #f36191;
+    color: #f36191;
+}
+.comment-form{
+    width: 85%;
+    margin:0 10px;
+}
+.submitbutton{
+    width: 10%;
+    margin-left: auto;
+}
+.btn:focus{
+    box-shadow: 0 0 0 0.2rem rgb(189 255 204 / 85%);
+}
+
+.complete{
+    color: #f36191;
+}
+.add{
+     color:#0CA789;
+}
+.limit{
+    color:#6bc4e2;
+}

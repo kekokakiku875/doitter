@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <meta name="description" content="TodoのSNS">
+
+        <!-- http://getbootstrap.com/docs/4.5/ -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+        <!-- https://fontawesome.com/-->
+        <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet">
+
+        <!--サイドバーロゴのフォント-->
+        <!--<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">-->
+
+        <link rel="stylesheet" href="{{url_for('static',filename='base.css')}}">
+        <!--cssを読み込みたい時-->
+        {% block head_css %}{% endblock %}
+
+        <!-- http://getbootstrap.com/docs/4.5/ -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+        <!--JavaScriptを読み込みたい時-->
+        {% block head_script %}{% endblock %}
+
+        <title>DoItter: {% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <aside class="sidebar">
+            <div class="sidebar-logo-area">
+                <a href="{{url_for('index')}}">
+                    <div class="logo">
+                        <div class="main-title">
+                            DoItter
+                        </div>
+                        <div class="sub-title">
+                            でゅいったー
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <hr class="sidebar-main-hr">
+            <nav class="sidebar-nav">
+                <ul class="sidebar-nav-ul">
+                    <li class="sidebar-nav-li"><a href="{{url_for('index')}}"><i class="fas fa-home fa-fw sidebar-nav-icon"></i>TIMELINE</a></li>
+                    <li class="sidebar-nav-li"><a href="{{url_for('todo', id=session['user_id'])}}"><i class="fas fa-user-alt fa-fw sidebar-nav-icon"></i>PROFILE</a></li>
+                    <li class="sidebar-nav-li"><a href="{{url_for('search')}}"><i class="fas fa-search fa-fw sidebar-nav-icon"></i>SEARCH</a></li>
+                    <li class="sidebar-nav-li"><a href=""><i class="fas fa-cog fa-fw sidebar-nav-icon"></i>SETTING</a></li>
+                </ul>
+            </nav>
+            <hr class="sidebar-footer-hr">
+            <div class="sidebar-footer">
+                <img class="layout-icon" src="{{url_for('static',filename=layout_icon['icon'])}}" alt="ユーザーアイコン">
+                <a href="{{url_for('logout')}}"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
+            </div>
+        </aside>
+        <main>
+            {% block main_header %}
+            <!--
+                1.main header左上にタイトルを追加する場合
+                    <div class="main-header-title-top">
+                        ここにタイトルを記述
+                    </div>
+
+                2.main header中央にタイトルを追加する場合
+                    <div class="main-header-title-mid">
+                        ここにタイトルを記述
+                    </div>
+
+                3.main headerを自由に記述したい場合
+                    自由に記述してOK
+            -->
+            {% endblock %}
+            <hr class="sidebar-main-hr">
+            <div class="main-content">
+                {% block main_content %}
+                <!--
+                    ・profileのtodo、Posts&commentを記述する場合
+                        <div class="profile">
+                            <div>
+                                <img class="profile-icon" src="{{url_for('static',filename='image/dummy_profile.svg')}}" alt="ダミーユーザーアイコン">
+                            </div>
+                            <div>
+                                <div class="profile-account-name">
+                                    アカウント名
+                                </div>
+                                <div class="profile-user-name">
+                                    @ユーザー名
+                                </div>
+                            </div>
+                            <div class="profile-follow">
+                                <div class="profile-follow-follower">
+                                    <a href="">フォロー 11</a>
+                                </div>
+                                <div class="profile-follow-follower">
+                                    <a href="">フォロワー 12</a>
+                                </div>
+                            </div>
+                            <div class="profile-edit">
+                                <button type="button" class="btn btn-outline-success">Edit Profile</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <ul class="profile-nav-ul">
+                                <li class="profile-nav-li"><a href="">Todo</a></li>
+                                <li class="profile-nav-li"><a href="">Posts & comment</a></li>
+                            </ul>
+                        </div>
+                        <hr class="profile-hr">
+                        この下にtodo、Posts&commentを
+                -->
+                {% endblock %}
+            </div>
+        </main>
+    </body>
+</html>

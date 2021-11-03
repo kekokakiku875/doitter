@@ -1,0 +1,105 @@
+.card{
+    border-radius: 5px;
+    background-color:#333333;
+    border:1px solid #c9c9c9;
+}
+.limit{
+    background-color:#0CA789;
+    font-weight:bold;
+}
+.today{
+
+    border:2px solid #ff6f72;
+    border:2px solid #0CA789;
+
+
+}
+.tommorow{
+     font-weight:bold;
+
+}
+
+.card:hover {
+  filter: brightness(120%);
+  /*background-color: #383838;*/
+}
+input[type="text"]{
+     border-radius: 5px;
+     border-color: #919191;
+
+}
+input[type="date"]{
+     border-radius: 5px;
+     border-color: #919191;
+}
+.mycheckbox input[type="checkbox"]{
+    display: none;
+}
+/* チェックボックスの代わりを成すラベル */
+.mycheckbox input[type="checkbox"]+.label{
+    display: none;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    padding-right: 10px;
+}
+/* ラベルの左に表示させる正方形のボックス□ */
+.mycheckbox input[type="checkbox"]+.label::before{
+    content: "";
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    left: 0;
+    top: 50%;
+    border: 1px solid;
+    border-color:  #585753; /* 枠の色変更 お好きな色を */
+    background-color: #FFF; /* 背景の色変更 お好きな色を */
+}
+/* チェックが入った時のレ点 */
+.mycheckbox input[type="checkbox"]:checked+.label::after{
+    content: "";
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+    width: 18px;
+    height: 9px;
+    margin-top: -9px;
+    top: 50%;
+    left: 3px;
+    transform: rotate(-45deg);
+    border-bottom: 3px solid;
+    border-left: 3px solid;
+    border-color:  #0CA789; /* チェックの色変更 お好きな色を */
+}
+
+.btn{
+
+    color:#0CA789;
+    border:1px solid #0CA789;
+    border-color:#0CA789;
+    /*background-color:#fff;*/
+}
+.btn:hover{
+    background-color:#0CA789;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #e1f7e4;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(72 180 97 / 25%);
+}
+.green{
+    color:white;
+    border:1px solid white;
+    border-color:white;
+}
+.green:hover{
+    background-color:white;
+    color:#0CA789;
+}

@@ -1,0 +1,88 @@
+.icon {
+    width: 3rem;
+    height: 3rem;
+    /*margin-right: 1rem;*/
+    border-radius: 50%;
+    /*border: 1px solid #707070;*/
+    box-sizing: border-box;
+}
+
+.block {
+    display: flex;
+}
+
+.post {
+    margin-bottom:15px;
+    margin-right:15px;
+}
+
+.card {
+    margin-left: 15px;
+    padding:15px;
+}
+
+.card-name {
+    margin-right: 10px
+}
+
+.card-content {
+    margin-bottom: 3px;
+}
+
+.righten {
+     margin-left: auto;
+}
+.complete{
+    color: #f36191;
+}
+.add{
+     color:#0CA789;
+}
+.limit{
+    color:#6bc4e2;
+}
+/*.btn{*/
+/*    color: #0CA789;*/
+/*    border-color: #0CA789;*/
+/*}*/
+
+/*.btn:hover{*/
+/*    background-color:#0CA789;*/
+/*}*/
+
+.btn{
+    color:#0CA789;
+    border-color:#0CA789;
+    /*background-color:#fff;*/
+}
+.btn:hover{
+    background-color:#0CA789;
+    color:white;
+}
+.hidden{
+    visibility:hidden;
+}
+
+.good{
+    border-color:#f36191;
+    color: #f36191;
+}
+
+.none{
+    display:none;
+}
+
+.card{
+    background-color:#333333;
+    color:white;
+    border:1px solid #c9c9c9;
+    
+}
+.bi-check2
+{
+    color:#39fad3;
+}
+
+.btn:focus{
+    box-shadow: 0 0 0 0.2rem rgb(189 255 204 / 85%);
+}

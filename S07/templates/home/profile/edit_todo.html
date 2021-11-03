@@ -1,0 +1,145 @@
+{% extends "home/layout.html" %}
+
+{% block title %}
+    Edit To Do
+{% endblock %}
+
+{% block head_css %}
+<link rel="stylesheet" href="{{url_for('static',filename='todo.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='profile.css')}}">
+{% endblock %}
+
+{% block main_header %}
+    <div class="main-header-top">
+        <div class="arrow-area">
+            <a type="button" onclick="history.back()"><i class="fas fa-arrow-left fa-fw back-arrow"></i></a>
+        </div>
+        <div class="title">
+            PROFILE
+        </div>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+<!--プロフィールの情報を表示する-->
+    <div class="profile">
+        <div>
+            <img class="profile-icon" src="{{url_for('static',filename=profile['icon'])}}" alt="ユーザーアイコン">
+        </div>
+        <div class="profile-name-container">
+            <div class="profile-account-name">
+                {{ profile['account_name'] }}
+            </div>
+            <div class="profile-user-name">
+                @{{ profile['user_name'] }}
+            </div>
+        </div>
+        <div class="profile-follow-done">
+            <div class="profile-follow-container">
+                <div class="profile-following">
+                    <a href="{{url_for('followingList', user_id=profile['id'])}}">{{ profile['following_count'] }} following</a>
+                </div>
+                <div class="profile-followers">
+                    <a href="{{url_for('followersList', user_id=profile['id'])}}">{{ profile['followers_count'] }} followers</a>
+                </div>
+            </div>
+            <div class="profile-task-container">
+                <div class="profile-todo">
+                    <a href="{{url_for('todo', id=profile['id'])}}"><i class="fas fa-list-ul fa-fw"></i>todo {{ profile["todo_count"] }}</a>
+                </div>
+                <div class="profile-done">
+                    <a href="{{url_for('done', id=profile['id'])}}"><i class="fas fa-crown fa-fw"></i>done {{ profile["done_count"] }}</a>
+                </div>
+            </div>
+        </div>
+        {% if session['user_id']==profile["id"] %}
+            <form action="{{url_for('edit_profile', profile_id=profile['id'])}}" class="profile-edit">
+                <button type="submit" class="btn btn-outline-success">Edit Profile</button>
+            </form>
+        {% endif %}
+    </div>
+
+<!--プロフィール下のナビゲーションバー-->
+<div>
+    <ul class="profile-nav-ul">
+        <a href="{{url_for('todo', id=profile['id'])}}" class="profile-nav-li"><li>Todo</li></a>
+        <a href="{{url_for('done', id=profile['id'])}}" class="profile-nav-li"><li>Done</li></a>
+        <a href="{{url_for('post_comment', id=profile['id'])}}" class="profile-nav-li"><li>Posts & comment</li></a>
+    </ul>
+</div>
+<hr class="profile-hr">
+
+<!-- 未達成のTo Doリストのカード-->
+{% for task in tasks %}
+    {% if task['id'] == edit_task_id %}
+
+        <form action="/edit/todo/{{task['id']}}" method="POST">
+            <div class="card {% if task['limit_at'] == today %}today{% endif %}{% if task['limit_at'] == tommorow %}tommorow{% endif %}{% if task['is_completed']==2 %}limit{% endif %}" style="width:75%; margin:0 auto;" >
+
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-sm-5">
+                           <!--タスク入力フォーム-->
+                           <input type="text" id="task" class="form-control" name="task" value="{{task['content']}}" required>
+                        </div>
+
+                           <!--期限入力フォーム-->
+                         <div class="col-sm-4">
+                            <input type="date" id="task" class="form-control" value="{{task['limit_at']}}" name="limit">
+                         </div>
+
+                        <!--登録ボタン-->
+                        <div class="col"><button  type="submit" class="{% if task['is_completed'] == 2 %}green{% endif %} btn btn-outline-success float-right  d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>EDIT</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    {% else %}
+        <div class="card {% if task['limit_at'] == today %}today{% endif %}{% if task['limit_at'] == tommorow %}tommorow{% endif %}{% if task['is_completed']==2 %}limit{% endif %}" style="width:75%; margin:0 auto;" >
+            <a {% if login_user == profile_id %} href="/check/{{task['id']}}" {% endif %}  class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-sm-5">
+                        <div class="mycheckbox d-flex align-items-center">
+                            <input class="form-check-input" type="checkbox" id="{{task['id']}}" style="transform:scale(1.8);" {%if task['is_completed']==1 %}checked {% endif %} {% if login_user != profile_id %} disabled {% endif %}>
+                        <!--タスク内容表示-->
+                            <div class="label form-check-label col-sm-12" for="{{task['id']}}">
+                                {{task['content']}}
+                            </div>
+                        </div>
+                    </div>
+                    <!--期限表示-->
+                    <div class="col-sm-4">
+                         　　　{% if task['limit_at'] == today %}<span style="font-weight: bold;">Today</span>{% elif task['limit_at'] == tommorow %}Tomorrow{% else %}{{task['limit_at']}}{% endif %}
+
+                    </div>
+                    {% if login_user==profile_id %}
+                        <!--編集ボタン-->
+                        <div class="col"><object><a href="/edit/todo/{{task['id']}}"><button  href="#" type="button" class="{% if task['is_completed'] == 2 %}green{% endif %} btn btn-outline-success float-right  d-flex align-items-center"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg></button></a></object>
+                        </div>
+
+
+                        <!--削除ボタン-->
+                        <div class="col-sm-1"><object><a href="#" type="button" class="{% if task['is_completed'] == 2 %}green{% endif %} btn btn-outline-success float-right  d-flex align-items-center"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                        </svg></a></object>
+                        </div>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
+    {% endif %}
+     <br>
+{% endfor %}
+
+{% endblock %}

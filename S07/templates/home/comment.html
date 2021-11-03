@@ -1,0 +1,152 @@
+{% extends "/home/layout.html" %}
+
+{% block head_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='comment.css')}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block head_script %}
+<script type="text/javascript" src="{{url_for('static',filename='good.js')}}"></script>
+{% endblock %}
+
+{% block title %}
+Comments
+{% endblock %}
+
+{% block main_header %}
+    <div class="main-header-top">
+        <div class="back-arrow">
+            <a type="button" onclick="history.back()"><i class="fas fa-arrow-left fa-fw"></i></a>
+        </div>
+        <div>
+            COMMENTS
+        </div>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+<!--タスク作成・達成を知らせる投稿ブロック-->
+<div class="block post" >
+    <!--顔写真-->
+    <div>
+        <input type="image" class="icon" src="{{url_for('static',filename=tweet['user_icon'])}}" alt="プロフィールボタン">
+    </div>
+    <!--投稿情報カード-->
+    <div class="card" style="width: 100%;">
+        <!--ユーザー情報-->
+        <a href="/todo/{{tweet.user_id}}">
+        <div class="block">
+            <p class="card-name">{{tweet.account_name}}</p>
+            <p>@{{tweet.user_name}}</p>
+            <p class="righten">{{tweet.created_at}}</p>
+        </div>
+        </a>
+        <!--投稿内容-->
+        <div class="block card-content">
+            <p class="card-content"><i class="bi {%if tweet.is_completed == 1 %}bi-check2-circle complete{% elif tweet.is_completed == 2 %}bi-droplet limit{% else %}bi-plus-circle add{% endif %}"></i><span style="font-size:18px;">{{tweet.content}}</span></p>
+        </div>
+
+        <!--ボタン類-->
+        <div class="block righten">
+            <!--頑張れ、お疲れ様ボタン-->
+            <div class="block mr-4">
+                <!--<p class="bottom">do your best!</p>-->
+                {% if tweet.good  %}
+                    <button href="/good" class="button btn btn-sm block btn-outline-success good good-btn" data-tweet_id="{{tweet.id}}">
+                {% else %}
+                    <button href="/good" class="button btn btn-sm block btn-outline-success good-btn" data-tweet_id="{{tweet.id}}">
+                {% endif %}
+
+                {% if tweet.is_completed == 0 %}
+                <p class="mb-0 pt-1">Do Your Best!</p><i class="bi bi-hand-thumbs-up-fill mr-1 ml-1" style="font-size: 18px"></i>
+                {% elif tweet.is_completed == 1 %}
+                <p class="mb-0 pt-1"> Good Work!　<i class="fas fa-hand-sparkles" style="font-size: 18px"></i> </p>
+                {% elif tweet.is_completed == 2 %}
+                <p class="mb-0 pt-1">It's deadline...</p><i class="bi bi-emoji-smile-upside-down-fill mr-1 ml-1" style="font-size: 18px"></i>
+                {% endif %}
+
+                <p class="mb-0 pt-1" id={{tweet.id}}>{{tweet.good_count}}</p>
+                </button>
+            </div>
+            <!--コメント数ボタン-->
+            <div class="block mr-4">
+                <a href="/comment/{{tweet.id}}" class="button btn btn-sm btn-outline-success block">
+                <p class="mb-0 pt-1"></p>
+                <i class="bi bi-chat-text-fill mr-2 ml-2" style="font-size: 18px"></i>
+                <p class="mb-0 pt-1">{{tweet.comment_count}}</p>
+                </a>
+            </div>
+            <!--削除ボタン-->
+            {%if session["user_id"] == tweet.user_id %}
+            <a href ="/delete/tweet/{{tweet.id}}" class="button btn btn-sm btn-outline-success">
+              <i class="bi bi-trash-fill" style="font-size: 18px"></i>
+            </a>
+            {% else %}
+            <a href ="#" class="hidden button btn btn-sm btn-outline-success">
+              <i class="bi bi-trash-fill" style="font-size: 18px"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<!--コメント入力ブロック-->
+<form action="{{ url_for('add_comment', tweet_id=tweet.id) }}", method="POST">
+    <div class="block add-comment">
+        <input type="image" class="icon-card" src="{{url_for('static',filename=tweet['user_icon'])}}" alt="プロフィールボタン">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <!--タスク入力フォーム-->
+                <div class="comment-form">
+                   <input type="text" id="comments" class="form-control" placeholder="Send a comment" name="content" required>
+                </div>
+
+                <!--送信ボタン-->
+                <div class="submitbutton"><button type="submit" class="btn btn-outline-success float-right  d-flex align-items-center">send</button></div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!--コメント-->
+<div class="block comment">
+    {% for comment in comments %}
+        <div class="block content">
+            <!--顔写真-->
+            <div>
+                <input type="image" class="icon" src="{{url_for('static',filename=comment.icon)}}" alt="プロフィールボタン">
+            </div>
+            <!--投稿情報カード-->
+            <div class="card" style="width: 100%;">
+                <!--ユーザー情報-->
+                <a href="/comment/{{comment.user_id}}">
+                <div class="block">
+                    <p class="card-name">{{comment.account_name}}</p>
+                    <p>@{{comment.user_name}}</p>
+                    <p class="righten">{{comment.created_at}}</p>
+                </div>
+                </a>
+                <!--投稿内容-->
+                <div class="block card-content">
+                    <p class="card-content"><span style="font-size:18px;">{{comment.content}}</span></p>
+                </div>
+                <!--ボタン類-->
+                <div class="block righten">
+                    <!--削除ボタン-->
+                    {%if session["user_id"] == comment.user_id %}
+                    <a href ="/delete/comment/{{ comment.id }}" class="button btn btn-sm">
+                      <i class="bi bi-trash-fill" style="font-size: 18px"></i>
+                    </a>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+
